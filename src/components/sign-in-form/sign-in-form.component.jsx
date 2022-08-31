@@ -25,30 +25,28 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();    
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      console.log(response);
       resetFormFields();
     } catch (error) {
-      switch(error.code){
+      switch (error.code) {
         case "auth/wrong-password":
           alert("incorrect password for email");
-          break
+          break;
         case "auth/user-not-found":
           alert("no user associated with this email");
-          break
+          break;
         default:
-          console.log(error)
+          console.log(error);
       }
     }
   };
